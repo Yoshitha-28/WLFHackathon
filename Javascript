@@ -1,5 +1,9 @@
-// file: script.js
-const inputData = { name: "Alice", age: 25 };
+const inputData = {
+  name: "Alice",
+  age: 25,
+  city: "New York",
+  profession: "Engineer"
+};
 
 fetch('http://localhost:5000/data', {
   method: 'POST',
@@ -7,5 +11,6 @@ fetch('http://localhost:5000/data', {
   body: JSON.stringify(inputData)
 })
   .then(response => response.json())
-  .then(data => console.log('Received from Python:', data))
+  .then(data => console.log('Response from Python:', data))
   .catch(error => console.error('Error:', error));
+
