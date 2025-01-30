@@ -1,376 +1,349 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Alumni Connect Portal">
-    <title>Alumni Connect Portal</title>
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            background-color: #f4f4f9;
-            color: #333;
-        }
-        .header {
-            background-color: #2c3e50;
-            color: white;
-            padding: 2px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-        .menu-icon {
-            position: absolute;
-            right: 20px;
-            font-size: 24px;
-            cursor: pointer;
-        }
-        .container {
-            display: flex;
-            flex: 1;
-        }
-        .sidebar {
-            background-color: #34495e;
-            padding: 1.5rem;
-            width: 35%;
-            height: 100vh;
-            color: white;
-            box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-        }
-        .profile-section {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-        .sidebar img {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            border: 2px solid white;
-        }
-        .profile-details h3, .profile-details p {
-            margin: 5px 0;
-        }
-        .form-group {
-            margin: 10px 0;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-        select {
-            width: 100%;
-            padding: 8px;
-            border-radius: 5px;
-            border: none;
-        }
-        .search-btn {
-            margin-top: 10px;
-            padding: 10px;
-            background-color: #2980b9;
-            color: white;
-            border: none;
-            cursor: pointer;
-            width: 100%;
-        }
-        .results {
-            flex: 1;
-            padding: 20px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-        }
-        .result-card {
-            background: white;
-            padding: 15px;
-            height: fit-content;
-            width: fit-content;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s;
-        }
-        .result-card:hover {
-            transform: scale(1.05);
-        }
-        /* Register Button */
-        .register-btn {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: #e74c3c;
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            font-size: 16px;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-        /* Modal Styles */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            justify-content: center;
-            align-items: center;
-        }
-        .modal-content {
-            background: white;
-            padding: 20px;
-            width: 350px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            text-align: center;
-        }
-        .close-btn {
-            background: none;
-            border: none;
-            font-size: 20px;
-            float: right;
-            cursor: pointer;
-            color: #e74c3c;
-        }
-        .form-group {
-            margin-bottom: 10px;
-            text-align: left;
-        }
-        @media (min-width: 768px) {
-            .sidebar {
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Alumni Connect Portal">
+        <title>Alumni Connect Portal</title>
+        <style>
+            body {
+                margin: 0;
+                font-family: Arial, sans-serif;
+                display: flex;
+                flex-direction: column;
+                height: 100vh;
+                background-color: #f4f4f9;
+                color: #333;
+            }
+            .header {
+                background-color: #2c3e50;
+                color: white;
+                padding: 2px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
                 position: relative;
-                transform: translateX(0);
             }
-        }
-    </style>
-</head>
-<body>
-    <header class="header">
-        <h1>MENTORSHIP</h1>
-        <div class="menu-icon">&#9776;</div>
-    </header>
-    <div class="container">
-        <div class="sidebar">
-            <div class="profile-section">
-                <img src="{{ url_for('static', filename='me.jpg') }}" alt="Profile Picture">
-                <div class="profile-details">
-                    <h3>Shalini</h3>
-                    <p>🎓 B.Tech CSE-DS</p>
-                    <p>📞 98xxx xxxxx</p>
-                    <p>📧 shalini@gmail.com</p>
+            .menu-icon {
+                position: absolute;
+                right: 20px;
+                font-size: 24px;
+                cursor: pointer;
+            }
+            .container {
+                display: flex;
+                flex: 1;
+            }
+            .sidebar {
+                background-color: #34495e;
+                padding: 1.5rem;
+                width: 35%;
+                height: 100vh;
+                color: white;
+                box-sizing: border-box;
+                display: flex;
+                flex-direction: column;
+            }
+            .profile-section {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                margin-bottom: 10px;
+            }
+            .sidebar img {
+                width: 80px;
+                height: 80px;
+                border-radius: 50%;
+                border: 2px solid white;
+            }
+            .profile-details h3, .profile-details p {
+                margin: 3px 0;
+            }
+            .form-group {
+                margin: 10px 0;
+            }
+            label {
+                display: block;
+                margin-bottom: 3px;
+                font-weight: bold;
+            }
+            select {
+                width: 100%;
+                padding: 8px;
+                border-radius: 5px;
+                border: none;
+            }
+            .search-btn {
+                margin-top: 10px;
+                padding: 10px;
+                background-color: #2980b9;
+                color: white;
+                border: none;
+                cursor: pointer;
+                width: 100%;
+            }
+            .results {
+                flex: 1;
+                padding: 20px;
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 20px;
+            }
+            .result-card {
+                background: white;
+                padding: 15px;
+                height:fit-content;
+                width:fit-content;
+                border-radius: 10px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                transition: transform 0.2s;
+            }
+            .result-card:hover {
+                transform: scale(1.05);
+            }
+            /* Register Button */
+            .register-btn {
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                background-color: #e74c3c;
+                color: white;
+                border: none;
+                padding: 12px 20px;
+                font-size: 16px;
+                border-radius: 8px;
+                cursor: pointer;
+            }
+            /* Modal Styles */
+            .modal {
+                display: none;
+                position: fixed;
+                z-index: 1000;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.5);
+                justify-content: center;
+                align-items: center;
+            }
+            .modal-content {
+                background: white;
+                padding: 20px;
+                width: 350px;
+                border-radius: 10px;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+                text-align: center;
+            }
+            .close-btn {
+                background: none;
+                border: none;
+                font-size: 20px;
+                float: right;
+                cursor: pointer;
+                color: #e74c3c;
+            }
+            .form-group {
+                margin-bottom: 10px;
+                text-align: left;
+            }
+            @media (min-width: 768px) {
+                .sidebar {
+                    position: relative;
+                    transform: translateX(0);
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <header class="header">
+            <h1>MENTORSHIP</h1>
+            <div class="menu-icon">&#9776;</div>
+        </header>
+        <div class="container">
+            <div class="sidebar">
+                <div class="profile-section">
+                    <img src="me.png" alt="Profile Picture">
+                    <div class="profile-details">
+                        <h3>Shalini</h3>
+                        <p>🎓 B.Tech CSE-DS</p>
+                        <p>📞 98xxx xxxxx</p>
+                        <p>📧 shalini@gmail.com</p>
+                    </div>
                 </div>
+                <h3>Categories</h3>
+                <div class="form-group">
+                    <label for="Degree">STREAM</label>
+                    <select id="Degree">
+                        <option value="">Select stream</option>
+                        <option>CSE</option>
+                        <option>Management</option>
+                        <option>Law</option>
+                        <option>Humanities</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="Domain">Domain of Interest</label>
+                    <select id="Domain">
+                        <option value="">Select your Domain</option>
+                        <option>Data Science</option>
+                        <option>Artificial Intelligence</option>
+                        <option>Machine Learning</option>
+                        <option>Data Analysis</option>
+                        <option>Web Development</option>
+                        <option>App Development</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="Company">Working Organization</label>
+                    <select id="Company">
+                        <option value="">Select Working Organization</option>
+                        <option>Microsoft</option>
+                        <option>Goldman Sachs</option>
+                        <option>TCS</option>
+                        <option>Salesforce</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="Experience">Experience Level</label>
+                    <select id="Experience">
+                        <option value="">Select Experience Level</option>
+                        <option>Fresher</option>
+                        <option>2-5years</option>
+                        <option>5-8years</option>
+                        <option>8years and above</option>
+                    </select>
+                </div>
+                <button class="search-btn" onclick="filterAlumni()">Search Alumni</button>
             </div>
-            <h3>Categories</h3>
-            <div class="form-group">
-                <label for="Degree">STREAM</label>
-                <select id="Degree">
-                    <option value="">Select stream</option>
-                    <option>CSE</option>
-                    <option>Management</option>
-                    <option>Law</option>
-                    <option>Humanities</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="Domain">Domain of Interest</label>
-                <select id="Domain">
-                    <option value="">Select your Domain</option>
-                    <option>Data Science</option>
-                    <option>Artificial Intelligence</option>
-                    <option>Machine Learning</option>
-                    <option>Data Analysis</option>
-                    <option>Web Development</option>
-                    <option>App Development</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="Company">Working Organization</label>
-                <select id="Company">
-                    <option value="">Select Working Organization</option>
-                    <option>Microsoft</option>
-                    <option>Goldman Sachs</option>
-                    <option>TCS</option>
-                    <option>Salesforce</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="Experience">Experience Level</label>
-                <select id="Experience">
-                    <option value="">Select Experience Level</option>
-                    <option>Fresher</option>
-                    <option>2-5years</option>
-                    <option>5-8years</option>
-                    <option>8years and above</option>
-                </select>
-            </div>
-            <button class="search-btn" onclick="searchMentors()">Search Alumni</button>
+            <div class="results" id="results"></div>
+            <script>
+                const alumniData = [
+                    { name: "Alice Johnson", degree: "CSE", domain: "Data Science", company: "Microsoft", experience: "5-8years" },
+                    { name: "Bob Smith", degree: "Management", domain: "Business Analysis", company: "Goldman Sachs", experience: "2-5years" },
+                    { name: "Charlie Brown", degree: "CSE", domain: "Machine Learning", company: "TCS", experience: "Fresher" },
+                    { name: "David Lee", degree: "Law", domain: "Legal Tech", company: "Salesforce", experience: "8years and above" }
+                ];
+                
+                function filterAlumni() {
+                    const degree = document.getElementById("Degree").value;
+                    const domain = document.getElementById("Domain").value;
+                    const company = document.getElementById("Company").value;
+                    const experience = document.getElementById("Experience").value;
+    
+                    if (!degree && !domain && !company && !experience) {
+                        alert("Please select at least one filter.");
+                        return;
+                    }
+    
+                    const filteredAlumni = alumniData.filter(alumnus => 
+                        (!degree || alumnus.degree === degree) &&
+                        (!domain || alumnus.domain === domain) &&
+                        (!company || alumnus.company === company) &&
+                        (!experience || alumnus.experience === experience)
+                    );
+                    
+                    displayResults(filteredAlumni);
+                }
+                
+                function displayResults(alumni) {
+                    const resultsDiv = document.getElementById("results");
+                    resultsDiv.innerHTML = "";
+                    
+                    if (alumni.length === 0) {
+                        resultsDiv.innerHTML = "<p>No matching alumni found.</p>";
+                        return;
+                    }
+                    
+                    alumni.forEach(alumnus => {
+                        const alumnusDiv = document.createElement("div");
+                        alumnusDiv.classList.add("result-card");
+                        alumnusDiv.innerHTML = `<p><strong>${alumnus.name}</strong> - ${alumnus.degree}, ${alumnus.domain}, ${alumnus.company}, ${alumnus.experience}</p>`;
+                        resultsDiv.appendChild(alumnusDiv);
+                    });
+                }
+                function toggleSidebar() {
+                    document.getElementById("sidebar").classList.toggle("active");
+                }
+            </script>
         </div>
-        <div class="results" id="results"></div>
-    </div>
-    <button class="register-btn" onclick="openModal()">Register</button>
-    <!-- Modal Popup -->
-    <div id="registerModal" class="modal">
-        <div class="modal-content">
-            <button class="close-btn" onclick="closeModal()">×</button>
-            <h3>Partner with an Alumni</h3>
-            <div class="form-group">
-                <label for="alumniName">Alumni Name</label>
-                <input type="text" id="alumniName" placeholder="Enter name">
-            </div>
-            <div class="form-group">
-                <label for="alumniDegree">Degree</label>
-                <select id="alumniDegree">
-                    <option value="">Select Degree</option>
-                    <option>CSE</option>
-                    <option>Management</option>
-                    <option>Law</option>
-                    <option>Humanities</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="alumniDomain">Domain</label>
-                <select id="alumniDomain">
-                    <option value="">Select Domain</option>
-                    <option>Data Science</option>
-                    <option>Artificial Intelligence</option>
-                    <option>Machine Learning</option>
-                    <option>Data Analysis</option>
-                    <option>Web Development</option>
-                    <option>App Development</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="alumniCompany">Organization</label>
-                <select id="alumniCompany">
-                    <option value="">Select Organization</option>
-                    <option>Microsoft</option>
-                    <option>Goldman Sachs</option>
-                    <option>TCS</option>
-                    <option>Salesforce</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="alumniExperience">Experience</label>
-                <select id="alumniExperience">
-                    <option value="">Select Experience</option>
-                    <option>Fresher</option>
-                    <option>2-5years</option>
-                    <option>5-8years</option>
-                    <option>8years and above</option>
-                </select>
-            </div>
-            <button class="submit-btn" onclick="submitAlumniDetails()">Submit</button>
-        </div>
-    </div>
-    <script>
-        function searchMentors() {
-            const degree = document.getElementById("Degree").value;
-            const domain = document.getElementById("Domain").value;
-            const company = document.getElementById("Company").value;
-            const experience = document.getElementById("Experience").value;
+        <button class="register-btn" onclick="openModal()">Register</button>
 
-            if (!degree && !domain && !company && !experience) {
-                alert("Please select at least one filter.");
-                return;
+        <!-- Modal Popup -->
+        <div id="registerModal" class="modal">
+            <div class="modal-content">
+                <button class="close-btn" onclick="closeModal()">×</button>
+                <h3>Partner with an Alumni</h3>
+                <div class="form-group">
+                    <label for="student_first_name">Student First Name</label>
+                    <input type="text" id="student_first_name" placeholder="Enter Your First Name">
+                </div>
+                <div class="form-group">
+                    <label for="student_last_name">Student Last Name</label>
+                    <input type="text" id="student_last_name" placeholder="Enter your Last Name">
+                </div>
+                <div class="form-group">
+                    <label for="stream">Stream</label>
+                    <input type="text" id="stream" placeholder="Enter your Stream">
+                </div>
+                <div class="form-group">
+                    <label for="student_email">Mail ID</label>
+                    <input type="text" id="student_email" placeholder="Enter your Mail Id">
+                </div>
+                <div class="form-group">
+                    <label for="mentor_first_name">Mentor First Name</label>
+                    <input type="text" id="mentor_first_name" placeholder="Enter Your Mentor's First Name">
+                </div>
+                <div class="form-group">
+                    <label for="mentor_last_name">Mentor Last Name</label>
+                    <input type="text" id="mentor_last_name" placeholder="Enter Your Mentor's Last Name">
+                </div>
+                <div class="form-group">
+                    <label for="mentor_domain">Domain of the Mentor</label>
+                    <select id="mentor_domain">
+                        <option value="">Select Domain</option>
+                        <option>Data Science</option>
+                        <option>Artificial Intelligence</option>
+                        <option>Machine Learning</option>
+                        <option>Data Analysis</option>
+                        <option>Web Development</option>
+                        <option>App Development</option>
+                    </select>
+                </div>
+                <button class="submit-btn" onclick="submitAlumniDetails()">Submit</button>
+            </div>
+        </div>
+
+        <script>
+            function openModal() {
+                document.getElementById("registerModal").style.display = "flex";
             }
+            function closeModal() {
+                document.getElementById("registerModal").style.display = "none";
+            }
+            function submitAlumniDetails() {
+                const data = {
+                    student_first_name: document.getElementById("student_first_name").value,
+                    student_last_name: document.getElementById("student_last_name").value,
+                    stream: document.getElementById("stream").value,
+                    student_email: document.getElementById("student_email").value,
+                    mentor_first_name: document.getElementById("mentor_first_name").value,
+                    mentor_last_name: document.getElementById("mentor_last_name").value,
+                    mentor_domain: document.getElementById("mentor_domain").value
+                };
 
-            const mentorData = { 
-                Degree: degree,
-                Domain: domain,
-                Company: company,
-                Experience: experience
-            };
-
-            fetch('/data', {  // Flask endpoint
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(mentorData)
-            })
-                .then(response => response.json())
-                .then(data => {
-                    console.log('Response from Python:', data);
-                    displayResults(data);
+                fetch('/submit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
                 })
-                .catch(error => {
-                    console.error('Error:', error);
-                    document.getElementById("results").innerHTML = "<p>Failed to fetch data. Please try again later.</p>";
-                });
-        }
-
-        function displayResults(data) {
-            const resultsDiv = document.getElementById("results");
-            resultsDiv.innerHTML = "";
-
-            if (!data || data.message) {
-                resultsDiv.innerHTML = "<p>No matching alumni found.</p>";
-                return;
-            }
-
-            data.forEach(alumnus => {
-                const alumnusDiv = document.createElement("div");
-                alumnusDiv.classList.add("result-card");
-                alumnusDiv.innerHTML = `
-                    <p><strong>${alumnus['First Name']} ${alumnus['Last Name']}</strong> - 
-                    ${alumnus['Stream']}, ${alumnus['Domain of Expertise']}, 
-                    ${alumnus['Current_Occupation Organization']}, 
-                    ${alumnus['Level of Expertise']} </p>`;
-                resultsDiv.appendChild(alumnusDiv);
-            });
-        }
-
-        function openModal() {
-            document.getElementById("registerModal").style.display = "flex";
-        }
-
-        function closeModal() {
-            document.getElementById("registerModal").style.display = "none";
-        }
-
-        function submitAlumniDetails() {
-            const name = document.getElementById("alumniName").value;
-            const degree = document.getElementById("alumniDegree").value;
-            const domain = document.getElementById("alumniDomain").value;
-            const company = document.getElementById("alumniCompany").value;
-            const experience = document.getElementById("alumniExperience").value;
-            if (!name || !degree || !domain || !company || !experience) {
-                alert("Please fill out all required fields.");
-                return;
-            }
-
-            const alumniData = {
-                Name: name,
-                Degree: degree,
-                Domain: domain,
-                Company: company,
-                Experience: experience
-            };
-
-            fetch("/register", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(alumniData)
-            })
                 .then(response => response.json())
-                .then(data => {
-                    alert("Registration successful!");
+                .then(result => {
+                    alert(result.message);
                     closeModal();
                 })
-                .catch(error => {
-                    alert("Registration failed.");
-                    console.error("Error:", error);
-                });
-        }
-    </script>
-</body>
+                .catch(error => alert("Failed to submit data."));
+            }
+        </script>
+    </body>
 </html>
