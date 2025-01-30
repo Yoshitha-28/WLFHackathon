@@ -1,0 +1,129 @@
+import streamlit as st
+import pandas as pd
+from langchain_experimental.agents.agent_toolkits import create_csv_agent
+from langchain_google_genai import ChatGoogleGenerativeAI
+import tempfile
+import re
+import json
+
+# Initialize the model
+model = ChatGoogleGenerativeAI(
+    model="gemini-1.5-flash",
+    verbose=True,
+    temperature=0.5,
+    google_api_key="AIzaSyAiKr8wnK_h5sBJ1n5cOgw_StJ-NM5MZfc"
+)
+
+# Streamlit app configuration
+st.set_page_config(page_title="ASK your EXCEL")
+st.header("Ask your EXCEL", divider='rainbow')
+
+# File uploader
+user_excel = 'Revised EXPORT_OSO1_1.xlsx'
+
+if user_excel is not None:
+    # Read the Excel file
+    df = pd.read_excel(user_excel)
+    
+    # Ensure 'Contract Num.' column is formatted as strings
+    if 'Contract Num.' in df.columns:
+        df['Contract Num.'] = df['Contract Num.'].astype(str).str.strip()
+
+    # Display the DataFrame
+    # st.write("Data from the uploaded Excel file:")
+    # st.dataframe(df)
+
+    # Convert the DataFrame to CSV
+    user_csv = df.to_csv(index=False)
+    
+    # Save the CSV to a temporary file
+    with tempfile.NamedTemporaryFile(delete=False, suffix=".csv") as tmp:
+        tmp.write(user_csv.encode('utf-8'))
+        temp_file_path = tmp.name  # Get the path of the temporary file
+
+    # Create the LangChain agent
+    agent = create_csv_agent(model, temp_file_path, verbose=True, allow_dangerous_code=True)
+    
+    # User input and response management
+    user_question = st.text_area("Ask a question about your file (Specify column names as 'columns: col1, col2,..')")
+
+    if 'last_question' not in st.session_state:
+        st.session_state.last_question = ''
+    
+    if 'show_response' not in st.session_state:
+        st.session_state.show_response = False
+    
+    submit_button = st.button('Need Help!!')
+
+    def extract_contract_numbers(response):
+        # Convert response to string and extract contract numbers
+        response_str = json.dumps(response)
+        pattern = re.compile(r'\b200000\d{4}\b')
+        return pattern.findall(response_str)
+
+    def parse_columns_from_question(question):
+        # Extract potential column names from the user's question
+        match = re.search(r'columns:\s*(.*)', question)
+        if match:
+            columns = [col.strip() for col in re.split(r'[/,]', match.group(1))]
+            return columns
+        return []
+
+    if submit_button:
+        with st.spinner('Processing...'):
+            st.session_state.last_question = user_question
+            st.session_state.show_response = True
+
+            if user_question.lower() != 'quit':
+                # Model invocation using all columns
+                response = agent.invoke(user_question)
+                # st.write("Response from model:", response)  # Debug: Show the response from the model
+                
+                # Extract contract numbers from the response
+                contract_numbers = extract_contract_numbers(response)
+                # st.write("Extracted contract numbers:", contract_numbers)  # Debug: Show extracted contract numbers
+
+                if contract_numbers:
+                    if 'Contract Num.' in df.columns:
+                        # Ensure contract numbers for filtering are stripped of extra spaces
+                        contract_numbers = [num.strip() for num in contract_numbers]
+                        relevant_contracts = df[df['Contract Num.'].isin(contract_numbers)]
+                        
+                        # Parse columns from the question for display purposes
+                        columns_to_display = parse_columns_from_question(user_question)
+                        # st.write("Columns to display:", columns_to_display)  # Debug: Show the columns to display
+
+                        # Ensure 'Contract Num.' is always displayed
+                        if 'Contract Num.' not in columns_to_display:
+                            columns_to_display = ['Contract Num.'] + columns_to_display
+                        
+                        # Select only the specified columns for display
+                        relevant_contracts_filtered = relevant_contracts[columns_to_display]
+                        
+                        # st.write("Filtered DataFrame:", relevant_contracts_filtered)  # Debug: Show the filtered DataFrame
+                        st.session_state.response = relevant_contracts_filtered
+                    else:
+                        st.session_state.response = "Column 'Contract Num.' not found in the uploaded file."
+                else:
+                    st.session_state.response = response.get("output", "")
+            else:
+                st.stop()
+
+    st.header('Response')
+
+    if st.session_state.show_response:
+        st.markdown(
+            f'<p style="background-color:white; text-align:right; padding: 8px 20px 8px 8px; border-radius: 20px;">Question: {st.session_state.last_question}</p>',
+            unsafe_allow_html=True
+        )
+        if isinstance(st.session_state.response, pd.DataFrame):
+            # Convert DataFrame to HTML and display without indices
+            response_html = st.session_state.response.to_html(index=False, justify='left', classes='dataframe')
+            st.markdown(response_html, unsafe_allow_html=True)
+        else:
+            st.markdown(
+                f'<p style="background-color:white; text-align:left; padding: 8px 100px 8px 8px; border-radius: 20px;">Answer: {st.session_state.response}</p>',
+                unsafe_allow_html=True
+            )
+        
+        st.session_state.show_response = False
