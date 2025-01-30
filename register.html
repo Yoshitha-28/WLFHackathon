@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Alumni Connect</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div id="branding">
+                <h1>Alumni Connect</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="login.html">Login</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <h1>Register</h1>
+        <form action="login.html" method="POST">
+            <input type="text" name="name" placeholder="Full Name" required>
+            <input type="text" name="branch" placeholder="Branch and Stream" required>
+            <input type="text" name="contact" placeholder="Contact Number" required>
+            <input type="email" name="gitam_email" placeholder="GITAM Email ID" required>
+            <input type="email" name="alt_email" placeholder="Alternate Email ID" required>
+            <input type="text" name="domains" placeholder="Interested Domains (Optional)">
+            <input type="password" name="password" placeholder="Password" required>
+            <input type="password" name="confirm_password" placeholder="Confirm Password" required>
+            <input type="submit" value="Register" class="button">
+        </form>
+    </div>
+</body>
+</html>
