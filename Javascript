@@ -1,0 +1,11 @@
+// file: script.js
+const inputData = { name: "Alice", age: 25 };
+
+fetch('http://localhost:5000/data', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify(inputData)
+})
+  .then(response => response.json())
+  .then(data => console.log('Received from Python:', data))
+  .catch(error => console.error('Error:', error));
