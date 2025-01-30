@@ -1,16 +1,19 @@
-const inputData = {
-  name: "Alice",
-  age: 25,
-  city: "New York",
-  profession: "Engineer"
+const mentorData = {
+  Domain: "Data Science",
+  Company: "TechCorp",
+  GradYear: 2018,
+  Degree: "B.Tech"
 };
 
-fetch('http://localhost:5000/data', {
+fetch('http://127.0.0.1:5000/data', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify(inputData)
+  body: JSON.stringify(mentorData)
 })
   .then(response => response.json())
-  .then(data => console.log('Response from Python:', data))
-  .catch(error => console.error('Error:', error));
-
+  .then(data => {
+    console.log('Response from Python:', data);
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
