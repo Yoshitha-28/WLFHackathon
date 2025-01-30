@@ -225,22 +225,32 @@
             <button class="close-btn" onclick="closeModal()">×</button>
             <h3>Partner with an Alumni</h3>
             <div class="form-group">
-                <label for="alumniName">Alumni Name</label>
-                <input type="text" id="alumniName" placeholder="Enter name">
+                <label for="student_first_name">Student First Name</label>
+                <input type="text" id="student_first_name" placeholder="Enter Your First Name">
             </div>
             <div class="form-group">
-                <label for="alumniDegree">Degree</label>
-                <select id="alumniDegree">
-                    <option value="">Select Degree</option>
-                    <option>CSE</option>
-                    <option>Management</option>
-                    <option>Law</option>
-                    <option>Humanities</option>
-                </select>
+                <label for="student_last_name">Student Last Name</label>
+                <input type="text" id="student_last_name" placeholder="Enter your Last Name">
             </div>
             <div class="form-group">
-                <label for="alumniDomain">Domain</label>
-                <select id="alumniDomain">
+                <label for="stream">Stream</label>
+                <input type="text" id="stream" placeholder="Enter your Stream">
+            </div>
+            <div class="form-group">
+                <label for="student_email">Mail ID</label>
+                <input type="text" id="student_email" placeholder="Enter your Mail Id">
+            </div>
+            <div class="form-group">
+                <label for="mentor_first_name">Mentor First Name</label>
+                <input type="text" id="mentor_first_name" placeholder="Enter Your Mentor's First Name">
+            </div>
+            <div class="form-group">
+                <label for="mentor_last_name">Mentor Last Name</label>
+                <input type="text" id="mentor_last_name" placeholder="Enter Your Mentor's Last Name">
+            </div>
+            <div class="form-group">
+                <label for="mentor_domain">Domain of the Mentor</label>
+                <select id="mentor_domain">
                     <option value="">Select Domain</option>
                     <option>Data Science</option>
                     <option>Artificial Intelligence</option>
@@ -248,26 +258,6 @@
                     <option>Data Analysis</option>
                     <option>Web Development</option>
                     <option>App Development</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="alumniCompany">Organization</label>
-                <select id="alumniCompany">
-                    <option value="">Select Organization</option>
-                    <option>Microsoft</option>
-                    <option>Goldman Sachs</option>
-                    <option>TCS</option>
-                    <option>Salesforce</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="alumniExperience">Experience</label>
-                <select id="alumniExperience">
-                    <option value="">Select Experience</option>
-                    <option>Fresher</option>
-                    <option>2-5years</option>
-                    <option>5-8years</option>
-                    <option>8years and above</option>
                 </select>
             </div>
             <button class="submit-btn" onclick="submitAlumniDetails()">Submit</button>
@@ -321,9 +311,9 @@
                 const alumnusDiv = document.createElement("div");
                 alumnusDiv.classList.add("result-card");
                 alumnusDiv.innerHTML = `
-                    <p><strong>${alumnus['First Name']} ${alumnus['Last Name']}</strong> - 
-                    ${alumnus['Stream']}, ${alumnus['Domain of Expertise']}, 
-                    ${alumnus['Current_Occupation Organization']}, 
+                    <p><strong>${alumnus['First Name']} ${alumnus['Last Name']}</strong></p>
+                    <p><b>Stream-</b> ${alumnus['Stream']}, <b>Domain-</b>${alumnus['Domain of Expertise']},</p>
+                    <p><b>Company-</b>${alumnus['Current_Occupation Organization']}, <b>Experience-</b>
                     ${alumnus['Level of Expertise']} </p>`;
                 resultsDiv.appendChild(alumnusDiv);
             });
@@ -338,12 +328,16 @@
         }
 
         function submitAlumniDetails() {
-            const name = document.getElementById("alumniName").value;
-            const degree = document.getElementById("alumniDegree").value;
-            const domain = document.getElementById("alumniDomain").value;
-            const company = document.getElementById("alumniCompany").value;
-            const experience = document.getElementById("alumniExperience").value;
-            if (!name || !degree || !domain || !company || !experience) {
+            const data = {
+                student_first_name: document.getElementById("student_first_name").value,
+                student_last_name: document.getElementById("student_last_name").value,
+                stream: document.getElementById("stream").value,
+                student_email: document.getElementById("student_email").value,
+                mentor_first_name: document.getElementById("mentor_first_name").value,
+                mentor_last_name: document.getElementById("mentor_last_name").value,
+                mentor_domain: document.getElementById("mentor_domain").value
+            };
+            if (!student_first_name || !student_last_name || !stream || !student_email || !mentor_first_name || !mentor_last_name || mentor_domain) {
                 alert("Please fill in all fields.");
                 return;
             }
