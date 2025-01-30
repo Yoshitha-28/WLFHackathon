@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 import gspread
 from google.oauth2.service_account import Credentials
 import pandas as pd
@@ -17,6 +17,10 @@ sheet = client.open_by_key(spreadsheet_id).sheet1
 def fetch_data():
     data = sheet.get_all_records()
     return pd.DataFrame(data)
+
+@app.route('/')
+def home():
+    return render_template('index.html')  # Serve the HTML file
 
 @app.route('/data', methods=['POST'])
 def receive_data():
@@ -49,4 +53,4 @@ def receive_data():
     return jsonify({"message": "No matching records found."}), 404
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=True)  # Run Flask in debug mode
