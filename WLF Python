@@ -1,0 +1,52 @@
+from flask import Flask, request, jsonify
+import gspread
+from google.oauth2.service_account import Credentials
+import pandas as pd
+
+app = Flask(__name__)
+
+# Google Sheets API setup
+credentials_file = "C:\\Yoshitha\\named-totality-434615-h9-6f17d7a5f085.json"  
+sheet_name = "WLF_Alumni_Database"
+scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
+credentials = Credentials.from_service_account_file(credentials_file, scopes=scope)
+client = gspread.authorize(credentials)
+spreadsheet_id = "1HWo5mEVtSiMbIgnwt6_fHLmB_tA_JRgWgmtHCx76WP8"
+sheet = client.open_by_key(spreadsheet_id).sheet1
+
+def fetch_data():
+    data = sheet.get_all_records()
+    return pd.DataFrame(data)
+
+@app.route('/data', methods=['POST'])
+def receive_data():
+    jsinputdata = request.json
+    mentor_domain = jsinputdata.get("Domain", "")  
+    mentor_company = jsinputdata.get("Company", "")
+    mentor_degree = jsinputdata.get("Degree", "")
+    mentor_experience = jsinputdata.get("Experience", "")
+
+    print(f"Received: {mentor_domain}, {mentor_company}, {mentor_degree}, {mentor_experience}")
+
+    df = fetch_data()
+    
+    filtered_data = df[
+        (df["Domain of Expertise"] == mentor_domain if mentor_domain else True) &
+        (df["Current_Occupation Organization"] == mentor_company if mentor_company else True) &
+        (df["Stream"] == mentor_degree if mentor_degree else True) &
+        (df["Level of Expertise"] == mentor_experience if mentor_experience else True)
+    ]
+    
+    if not filtered_data.empty:
+        result = filtered_data[[ 
+            "First Name", "Last Name", "Stream", "Phone No", "Mail ID", 
+            "LinkedIn Profile", "Current_Occupation Role", 
+            "Current_Occupation Organization", "Domain of Expertise", 
+            "Level of Expertise"
+        ]].to_dict(orient='records')
+        return jsonify(result)
+
+    return jsonify({"message": "No matching records found."}), 404
+
+if __name__ == "__main__":
+    app.run(debug=True)
