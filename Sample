@@ -11,7 +11,7 @@ model = ChatGoogleGenerativeAI(
     model="gemini-1.5-flash",
     verbose=True,
     temperature=0.5,
-    google_api_key="AIzaSyAiKr8wnK_h5sBJ1n5cOgw_StJ-NM5MZfc"
+    google_api_key=""
 )
 
 # Streamlit app configuration
