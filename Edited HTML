@@ -258,10 +258,15 @@
                     alumni.forEach(alumnus => {
                         const alumnusDiv = document.createElement("div");
                         alumnusDiv.classList.add("result-card");
-                        alumnusDiv.innerHTML = `<p><strong>${alumnus.name}</strong> - ${alumnus.degree}, ${alumnus.domain}, ${alumnus.company}, ${alumnus.experience}</p>`;
+                        alumnusDiv.innerHTML = `
+                            <p><strong>${alumnus.name}</strong></p>
+                            <p><b>Degree-</b> ${alumnus.degree}, <b>Domain-</b> ${alumnus.domain}</p>
+                            <p> <b>Company-</b> ${alumnus.company}, <b>Experience-</b> ${alumnus.experience}</p>
+                        `;
                         resultsDiv.appendChild(alumnusDiv);
                     });
                 }
+                
                 function toggleSidebar() {
                     document.getElementById("sidebar").classList.toggle("active");
                 }
