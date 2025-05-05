@@ -68,24 +68,17 @@ Mentor data is dynamically fetched from a live Google Sheet using the Google She
 
 ---
 
-## 📸 Hackathon Preview (Screenshots)
-
-### 🔹 Dashboard View  
-![Dashboard](static/screenshots/dashboard.png)
-
-### 🔹 Mentor Directory with Filters  
-![Mentorship Filter Page](static/screenshots/mentors.png)
-
-### 🔹 Login Page  
-![Login Page](static/screenshots/login.png)
->>>>>>> 99dddc4228215753304cdee09029df421b2256fa
-
 ## 🧭 Navigation Guide
 
 1. Login using any credentials (authentication is not implemented).  
 2. Upon login, you are redirected to the dashboard.  
 3. From the dashboard, navigate to the **Mentorship** section.  
 4. Use the available filters to browse mentors, whose data is fetched live from a connected Google Sheet.
+
+---
+## Collaborators
+- Yoshitha Maddineni
+- Nadimpalli Poorna Shalini
 
 ---
 
