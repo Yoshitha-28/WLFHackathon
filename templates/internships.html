@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Internships - Alumni Connect</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div id="branding">
+                <h1>Alumni Connect</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+                    <li><a href="{{ url_for('internships') }}">Internships</a></li>
+                    <li><a href="{{ url_for('qa_board') }}">Q&A Board</a></li>
+                    <li><a href="{{ url_for('home') }}">Logout</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <h1>Internship Opportunities</h1>
+        <div class="box">
+            <h2>Web Development Intern</h2>
+            <p>Join our team to work on exciting web projects using the latest technologies.</p>
+            <a href="#" class="button">Apply Now</a>
+        </div>
+        <div class="box">
+            <h2>Data Science Project</h2>
+            <p>Work on a machine learning project to predict customer behavior.</p>
+            <a href="#" class="button">Apply Now</a>
+        </div>
+        <div class="box">
+            <h2>Mobile App Development</h2>
+            <p>Help create a new mobile app for a startup in the health and fitness industry.</p>
+            <a href="#" class="button">Apply Now</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Alumni Connect</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
     <header>
@@ -14,11 +14,10 @@
             </div>
             <nav>
                 <ul>
-                    <li><a href="landing.html">Dashboard</a></li>
-                    <li><a href="use.html">Mentorships</a></li>
-                    <li><a href="internships.html">Internships</a></li>
-                    <li><a href="qa_board.html">Q&A Board</a></li>
-                    <li><a href="index.html">Logout</a></li>
+                    <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+                    <li><a href="{{ url_for('mentorships') }}">Mentorships</a></li>
+                    <li><a href="{{ url_for('internships') }}">Internships</a></li>
+                    <li><a href="{{ url_for('qa_board') }}">Q&A Board</a></li>
                 </ul>
             </nav>
         </div>
@@ -29,21 +28,21 @@
         <div class="box">
             <h2>Mentorships</h2>
             <p>Connect with mentors in your field of interest.</p>
-            <a href="#" class="button">Find a Mentor</a>
+            <a href="{{ url_for('mentorships') }}" class="button">Find a Mentor</a>
         </div>
         <div class="box">
             <h2>Internships</h2>
             <p>Explore internship opportunities.</p>
-            <a href="internships.html" class="button">View Internships</a>
+            <a href="{{ url_for('internships') }}" class="button">View Internships</a>
         </div>
         <div class="box">
             <h2>Q&A Board</h2>
             <p>Ask questions and participate in discussions.</p>
-            <a href="qa_board.html" class="button">Go to Q&A Board</a>
+            <a href="{{ url_for('qa_board') }}" class="button">Go to Q&A Board</a>
         </div>
         <div class="box">
             <h2>Can't Find an Alumni?</h2>
-            <form action="#" method="POST">
+            <form action="{{ url_for('qa_board') }}" method="POST">
                 <input type="text" name="request" placeholder="Enter your request">
                 <input type="submit" value="Submit Request" class="button">
             </form>

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register - Alumni Connect</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
     <header>
@@ -14,8 +14,8 @@
             </div>
             <nav>
                 <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="login.html">Login</a></li>
+                    <li><a href="{{ url_for('home') }}">Home</a></li>
+                    <li><a href="{{ url_for('login') }}">Login</a></li>
                 </ul>
             </nav>
         </div>
@@ -23,7 +23,7 @@
 
     <div class="container">
         <h1>Register</h1>
-        <form action="login.html" method="POST">
+        <form action="{{ url_for('login') }}" method="POST">
             <input type="text" name="name" placeholder="Full Name" required>
             <input type="text" name="branch" placeholder="Branch and Stream" required>
             <input type="text" name="contact" placeholder="Contact Number" required>
@@ -34,6 +34,7 @@
             <input type="password" name="confirm_password" placeholder="Confirm Password" required>
             <input type="submit" value="Register" class="button">
         </form>
+        <form action="{{ url_for('dashboard') }}" method="POST"></form>
     </div>
 </body>
 </html>

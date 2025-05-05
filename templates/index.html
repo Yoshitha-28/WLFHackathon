@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alumni Connect Platform</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
     <header>
@@ -14,8 +14,8 @@
             </div>
             <nav>
                 <ul>
-                    <li><a href="login.html">Login</a></li>
-                    <li><a href="register.html">Register</a></li>
+                    <li><a href="{{ url_for('login') }}">Login</a></li>
+                    <li><a href="{{ url_for('register') }}">Register</a></li>
                 </ul>
             </nav>
         </div>
@@ -24,7 +24,7 @@
     <div class="container">
         <h1>Welcome to Alumni Connect</h1>
         <p>Connect with alumni for mentorship, internships, and career opportunities.</p>
-        <a href="register.html" class="button">Get Started</a>
+        <a href="{{ url_for('register') }}" class="button">Get Started</a>
     </div>
 </body>
 </html>

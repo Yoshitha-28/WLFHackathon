@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Alumni Connect</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
     <header>
@@ -14,8 +14,8 @@
             </div>
             <nav>
                 <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="register.html">Register</a></li>
+                    <li><a href="{{ url_for('dashboard') }}">Home</a></li>
+                    <li><a href="{{ url_for('register') }}">Register</a></li>
                 </ul>
             </nav>
         </div>
@@ -23,7 +23,11 @@
 
     <div class="container">
         <h1>Login</h1>
-        <form action="landing.html" method="POST">
+        <!-- Display error message if available -->
+        {% if error %}
+            <p style="color:red;">{{ error }}</p>
+        {% endif %}
+        <form action="{{ url_for('login') }}" method="POST">
             <input type="email" name="email" placeholder="Student Email ID" required>
             <input type="password" name="password" placeholder="Password" required>
             <input type="submit" value="Login" class="button">

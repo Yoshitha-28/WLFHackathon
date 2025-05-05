@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Internships - Alumni Connect</title>
+    <title>Q&A Board - Alumni Connect</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -24,22 +24,24 @@
     </header>
 
     <div class="container">
-        <h1>Internship Opportunities</h1>
+        <h1>Q&A Board</h1>
         <div class="box">
-            <h2>Web Development Intern</h2>
-            <p>Join our team to work on exciting web projects using the latest technologies.</p>
-            <a href="#" class="button">Apply Now</a>
+            <h2>Create New Thread</h2>
+            <form action="/qa_board" method="POST">
+                <input type="text" name="title" placeholder="Thread Title" required>
+                <textarea name="message" placeholder="Your message" required></textarea>
+                <input type="submit" value="Create Thread" class="button">
+            </form>
         </div>
+
+        <!-- Display threads dynamically -->
+        {% for thread in threads %}
         <div class="box">
-            <h2>Data Science Project</h2>
-            <p>Work on a machine learning project to predict customer behavior.</p>
-            <a href="#" class="button">Apply Now</a>
+            <h2>{{ thread.title }}</h2>
+            <p>{{ thread.message }}</p>
+            <a href="#" class="button">Reply</a>
         </div>
-        <div class="box">
-            <h2>Mobile App Development</h2>
-            <p>Help create a new mobile app for a startup in the health and fitness industry.</p>
-            <a href="#" class="button">Apply Now</a>
-        </div>
+        {% endfor %}
     </div>
 </body>
 </html>
